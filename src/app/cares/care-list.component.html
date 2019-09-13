@@ -28,7 +28,16 @@
                 </tr>
             </thead>
             <tbody>
-                
+                <tr *ngFor='let care of cares'>
+                    <td>{{care.date}}</td>
+                    <td>{{care.description}}</td>
+                    <td>{{care.beneficiary}}</td>
+                    <td>{{care.professional}}</td>
+                    <td>{{care.payor}}</td>
+                    <td>{{care.paidAmount}}</td>
+                    <td>{{care.paymentMethod}}</td>
+                    <td>{{care.healthCard}}</td>
+                </tr>
             </tbody>
         </table>
     </div>
