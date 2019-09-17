@@ -38,7 +38,7 @@
                     <td>{{care.paidAmount | currency:'EUR'}}</td>
                     <td>{{care.paymentMethod}}</td>
                     <td>{{care.healthCard}}</td>
-                    <td>{{care.completed}}</td>
+                    <td><cm-star [rating]='care.completed'></cm-star></td>
                 </tr>
             </tbody>
         </table>
