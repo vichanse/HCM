@@ -12,13 +12,19 @@ export class CareListComponent implements OnInit{
     _listFilter: string ;
     filteredCares : ICare[];
     cares: ICare[] = [];
+    errorMessage: string;
 
     constructor(private careService: CareService) {
     }
 
     ngOnInit(): void {
-        this.cares =this.careService.getCares();
-        this.filteredCares = this.cares;
+        this.careService.getCares().subscribe({
+            next: cares => {
+                this.cares = cares,
+                this.filteredCares = this.cares
+            },
+            error: err => this.errorMessage = err
+        });
         
     }
 

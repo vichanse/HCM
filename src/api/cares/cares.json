@@ -8,7 +8,8 @@
     "payor": "Compte joint",
     "paidAmount": 30.00,
     "paymentMethod": "Carte bancaire",
-    "healthCard": "Vicky"
+    "healthCard": "Vicky",
+    "completed": 1
   },
   {
     "id": 2,
@@ -19,7 +20,8 @@
     "payor": "Compte joint",
     "paidAmount": 25.00,
     "paymentMethod": "Carte bancaire",
-    "healthCard": "Vicky"
+    "healthCard": "Vicky",
+    "completed": 0
   },
   {
     "id": 3,
@@ -30,7 +32,8 @@
     "payor": "Compte joint",
     "paidAmount": 30.00,
     "paymentMethod": "Carte bancaire",
-    "healthCard": "Vicky"
+    "healthCard": "Vicky",
+    "completed": 0.7
   },
   {
     "id": 4,
@@ -41,7 +44,8 @@
     "payor": "Compte joint",
     "paidAmount": 25.00,
     "paymentMethod": "Carte bancaire",
-    "healthCard": "Arlette"
+    "healthCard": "Arlette",
+    "completed": 0.6
   },
   {
     "id": 5,
@@ -52,6 +56,7 @@
     "payor": "Compte joint",
     "paidAmount": 25,
     "paymentMethod": "Carte bancaire",
-    "healthCard": "Vicky"
+    "healthCard": "Vicky",
+    "completed": 1
   }
 ]

@@ -1,73 +1,39 @@
 import { Injectable } from '@angular/core';
 import { ICare } from './care';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, tap} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CareService {
+    private careUrl = 'api/cares/cares.json';
 
-    getCares(): ICare[] {
-        return [
-            {
-              "id": 1,
-              "description": "Consultation",
-              "beneficiary": "Keyshawn",
-              "professional": "Lacroix",
-              "date": "March 19, 2019",
-              "payor": "Compte joint",
-              "paidAmount": 30.00,
-              "paymentMethod": "Carte bancaire",
-              "healthCard": "Vicky",
-              "completed": 0.7
-            },
-            {
-              "id": 2,
-              "description": "Consultation",
-              "beneficiary": "Keylia",
-              "professional": "Lacroix",
-              "date": "May 19, 2019",
-              "payor": "Compte joint",
-              "paidAmount": 25.00,
-              "paymentMethod": "Carte bancaire",
-              "healthCard": "Vicky",
-              "completed": 0.7
-            },
-            {
-              "id": 3,
-              "description": "Consultation",
-              "beneficiary": "Keyrwynn",
-              "professional": "Lacroix",
-              "date": "June 19, 2019",
-              "payor": "Compte joint",
-              "paidAmount": 30.00,
-              "paymentMethod": "Carte bancaire",
-              "healthCard": "Vicky",
-              "completed": 1
-            },
-            {
-              "id": 4,
-              "description": "Consultation",
-              "beneficiary": "Arlette",
-              "professional": "Brosse",
-              "date": "July 19, 2019",
-              "payor": "Compte joint",
-              "paidAmount": 25.00,
-              "paymentMethod": "Carte bancaire",
-              "healthCard": "Arlette",
-              "completed": 0
-            },
-            {
-              "id": 5,
-              "description": "Consultation",
-              "beneficiary": "Vicky",
-              "professional": "Lacroix",
-              "date": "August 19, 2019",
-              "payor": "Compte joint",
-              "paidAmount": 25,
-              "paymentMethod": "Carte bancaire",
-              "healthCard": "Vicky",
-              "completed": 0.5
-            }
-          ];
+    constructor(private http: HttpClient) {
+        
     }
+
+    getCares(): Observable<ICare[]> {
+        return this.http.get<ICare[]>(this.careUrl).pipe(
+            tap(data => console.log('All: ' + JSON.stringify(data))),
+            catchError(this.handleError)
+        );
+    }
+
+    private handleError(err: HttpErrorResponse) {
+        // in a real world app, we may send the server to some remote logging infrastructure
+        // instead of just logging it to the console
+        let errorMessage = '';
+        if (err.error instanceof ErrorEvent) {
+          // A client-side or network error occurred. Handle it accordingly.
+          errorMessage = `An error occurred: ${err.error.message}`;
+        } else {
+          // The backend returned an unsuccessful response code.
+          // The response body may contain clues as to what went wrong,
+          errorMessage = `Server returned code: ${err.status}, error message is: ${err.message}`;
+        }
+        console.error(errorMessage);
+        return throwError(errorMessage);
+      }
 }
