@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Vichanse: Health Care Management';
+  pageTitle = 'Vichanse Health Care Management';
 }
