@@ -1,10 +1,17 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<nav class='navbar navbar-expand navbar-light bg-light'>
+<nav class='navbar navbar-expand-md navbar-light bg-light'>
   <a class='navbar-brand'>{{pageTitle}}</a>
-  <ul class='nav nav-pills'>
-    <li><a class='nav-link' [routerLink]="['/welcome']">Home</a></li>
-    <li><a class='nav-link'[routerLink]="['/cares']">Care List</a></li>
-  </ul>
+  <button type="button" (click)="toggleNavbar()" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+      <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }">
+      <ul class='nav nav-pills'>
+          <li><a class='nav-link' [routerLink]="['/welcome']">Home</a></li>
+          <li><a class='nav-link'[routerLink]="['/cares']">Care List</a></li>
+        </ul>
+  </div>
+  
+  
   
 </nav>
 <div class='container'>
