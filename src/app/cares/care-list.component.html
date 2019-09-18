@@ -17,27 +17,23 @@
         <table class='table' *ngIf='cares && cares.length'>
             <thead>
                 <tr>
+                    <th></th>
                     <th>Date</th>
                     <th>Description</th>
                     <th>Beneficiary</th>
-                    <th>Professional</th>
-                    <th>Payor</th>
                     <th>Paid amount</th>
-                    <th>Payment Method</th>
-                    <th>Health Card</th>
                     <th>Completed</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor='let care of filteredCares'>
+                    <td><a [routerLink]="['/cares', care.id]">
+                        <i class="fa fa-edit"></i>
+                    </a></td>
                     <td>{{care.date}}</td>
                     <td>{{care.description}}</td>
                     <td>{{care.beneficiary}}</td>
-                    <td>{{care.professional}}</td>
-                    <td>{{care.payor}}</td>
                     <td>{{care.paidAmount | currency:'EUR'}}</td>
-                    <td>{{care.paymentMethod}}</td>
-                    <td>{{care.healthCard}}</td>
                     <td><cm-star [rating]='care.completed'></cm-star></td>
                 </tr>
             </tbody>

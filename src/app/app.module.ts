@@ -1,3 +1,4 @@
+import { CareDetailGuard } from './cares/care-detail.guard';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -25,7 +26,11 @@ import { CareDetailComponent } from './cares/care-detail.component';
     HttpClientModule,
     RouterModule.forRoot([
       { path: 'cares', component: CareListComponent },
-      { path: 'cares/:id', component: CareDetailComponent },
+      { 
+        path: 'cares/:id', 
+        canActivate: [CareDetailGuard],
+        component: CareDetailComponent 
+      },
       { path: 'welcome', component: WelcomeComponent },
       { path: '', redirectTo: 'welcome', pathMatch: 'full' },
       { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
