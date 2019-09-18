@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ICare } from './care';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, tap} from 'rxjs/operators';
+import { catchError, tap, map} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -18,6 +18,13 @@ export class CareService {
         return this.http.get<ICare[]>(this.careUrl).pipe(
             tap(data => console.log('All: ' + JSON.stringify(data))),
             catchError(this.handleError)
+        );
+    }
+
+    getCare(id: number): Observable<ICare | undefined> {
+      return this.getCares()
+        .pipe(
+          map((cares: ICare[]) => cares.find(care => care.id === id))
         );
     }
 
