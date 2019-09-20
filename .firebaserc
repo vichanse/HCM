@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "vichanse-hcm": {
+      "hosting": {
+        "APM": [
+          "vichanse-hcm"
+        ]
+      }
+    }
+  }
+}
