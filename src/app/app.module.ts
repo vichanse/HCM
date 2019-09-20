@@ -1,13 +1,12 @@
-import { CareDetailGuard } from './cares/care-detail.guard';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
-import { CareListComponent } from './cares/care-list.component';
 import { WelcomeComponent } from './home/welcome.component';
-import { CareDetailComponent } from './cares/care-detail.component';
 import { CareModule } from './cares/care.module';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -18,6 +17,7 @@ import { AppRoutingModule } from './app-routing.module';
   ],
   imports: [
     BrowserModule,
+    AngularFireModule.initializeApp(environment.firebase),
     HttpClientModule,
     CareModule,
     AppRoutingModule
