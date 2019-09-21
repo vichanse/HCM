@@ -1,0 +1,9 @@
+<ng-container *ngIf="profile$ | async as profile; else signinForm">
+        <div class="actions">
+      
+          <button class='primary' (click)="signout()"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
+        </div>
+      </ng-container>
+      <ng-template #signinForm>
+        <button class='primary' (click)="signin()"><i class="fa fa-user" aria-hidden="true"></i></button>
+      </ng-template>
