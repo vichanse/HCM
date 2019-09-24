@@ -1,0 +1,150 @@
+<div class="card">
+  <div class="card-header">
+    {{ pageTitle }}
+  </div>
+
+  <div class="card-body">
+    <form novalidate (ngSubmit)="saveCare()" [formGroup]="careForm">
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" for="description"
+          >Description</label
+        >
+        <div class="col-md-8">
+          <input
+            class="form-control"
+            id="description"
+            type="text"
+            placeholder="Description (required)"
+            formControlName="description"
+          />
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" for="beneficiary"
+          >Beneficiary</label
+        >
+        <div class="col-md-8">
+          <input
+            class="form-control"
+            id="beneficiary"
+            type="text"
+            placeholder="Beneficiary (required)"
+            formControlName="beneficiary"
+          />
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" for="professional"
+          >Professional</label
+        >
+        <div class="col-md-8">
+          <input
+            class="form-control"
+            id="professional"
+            type="text"
+            placeholder="Professional (required)"
+            formControlName="professional"
+          />
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" for="payor">Payor</label>
+        <div class="col-md-8">
+          <input
+            class="form-control"
+            id="payor"
+            type="text"
+            placeholder="Payor (required)"
+            formControlName="payor"
+          />
+        </div>
+      </div>
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" for="paidAmount"
+          >Paid Amount</label
+        >
+        <div class="col-md-8">
+          <input
+            class="form-control"
+            id="paidAmount"
+            type="text"
+            placeholder="Paid Amount (required)"
+            formControlName="paidAmount"
+          />
+        </div>
+      </div>
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" for="paymentMethod"
+          >Payment Method</label
+        >
+        <div class="col-md-8">
+          <input
+            class="form-control"
+            id="paymentMethod"
+            type="text"
+            placeholder="Payment Method (required)"
+            formControlName="paymentMethod"
+          />
+        </div>
+      </div>
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" for="healthCard"
+          >Health Card
+        </label>
+        <div class="col-md-8">
+          <input
+            class="form-control"
+            id="healthCard"
+            type="text"
+            placeholder="Health Card (required)"
+            formControlName="healthCard"
+          />
+        </div>
+      </div>
+      
+
+      <div class="form-group row mb-2">
+        <div class="offset-md-2 col-md-4">
+          <button
+            class="btn btn-primary mr-3"
+            style="width:80px;"
+            type="submit"
+            [title]="
+              careForm.valid
+                ? 'Save your entered data'
+                : 'Disabled until the form data is valid'
+            "
+            [disabled]="!careForm.valid"
+          >
+            Save
+          </button>
+          <button
+            class="btn btn-outline-secondary mr-3"
+            style="width:80px;"
+            type="button"
+            title="Cancel your edits"
+            [routerLink]="['/cares']"
+          >
+            Cancel
+          </button>
+          <button
+            class="btn btn-outline-warning"
+            style="width:80px"
+            type="button"
+            title="Delete this product"
+            (click)="deleteCare()"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- <div class="alert alert-danger"
+             *ngIf="errorMessage">{{errorMessage}}
+        </div> -->
+</div>

@@ -1,6 +1,8 @@
-import { CareService } from './care.service';
+
 import { Component, OnInit } from '@angular/core';
 import { ICare } from './care'
+import { CareService } from './state/care.service';
+import { Care } from './state/care.model';
 @Component({
     selector: 'cm-cares',
     templateUrl: './care-list.component.html',
@@ -10,8 +12,8 @@ export class CareListComponent implements OnInit{
     
     pageTitle: string = 'Care List';
     _listFilter: string ;
-    filteredCares : ICare[];
-    cares: ICare[] = [];
+    filteredCares : Care[];
+    cares: Care[] = [];
     errorMessage: string;
 
     constructor(private careService: CareService) {
@@ -37,9 +39,9 @@ export class CareListComponent implements OnInit{
         this.filteredCares = this.listFilter ? this.performFilter(this.listFilter) : this.cares;
     }
 
-    performFilter(filterBy: string): ICare[] {
+    performFilter(filterBy: string): Care[] {
         filterBy = filterBy.toLocaleLowerCase();
-        return this.cares.filter((care: ICare) => care.beneficiary.toLocaleLowerCase().indexOf(filterBy) !== -1)
+        return this.cares.filter((care: Care) => care.beneficiary.toLocaleLowerCase().indexOf(filterBy) !== -1)
     }
     
 }

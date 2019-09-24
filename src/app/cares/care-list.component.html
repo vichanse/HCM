@@ -1,42 +1,55 @@
-<div class='card'>
-    <div class='card-header'>
-        {{pageTitle}}
+<div class="card">
+  <div class="card-header">
+    {{ pageTitle }}
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-2">Filter by:</div>
+      <div class="col-md-4">
+        <input type="text" [(ngModel)]="listFilter" />
+      </div>
     </div>
-    <div class='card-body'>
-        <div class='row'>
-            <div class='col-md-2'>Filter by:</div>
-            <div class='col-md-4'>
-                <input type='text' [(ngModel)]='listFilter' />
-            </div>
-        </div>
-        <div class='row'>
-            <div class='col-md-6'>Filtered by: {{listFilter}}</div>
-        </div>
+    <div class="row">
+      <div class="col-md-6">Filtered by: {{ listFilter }}</div>
     </div>
-    <div class='table-responsive'>
-        <table class='table' *ngIf='cares && cares.length'>
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Date</th>
-                    <th>Description</th>
-                    <th>Beneficiary</th>
-                    <th>Paid amount</th>
-                    <th>Completed</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor='let care of filteredCares'>
-                    <td><a [routerLink]="['/cares', care.id]">
-                        <i class="fa fa-edit"></i>
-                    </a></td>
-                    <td>{{care.date}}</td>
-                    <td>{{care.description}}</td>
-                    <td>{{care.beneficiary}}</td>
-                    <td>{{care.paidAmount | currency:'EUR'}}</td>
-                    <td><cm-star [rating]='care.completed'></cm-star></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+  </div>
+  <div class="table-responsive">
+    <table class="table" *ngIf="cares && cares.length">
+      <thead>
+        <tr>
+          
+          <th>Date</th>
+          <th>Description</th>
+          <th>Beneficiary</th>
+          <th>Paid amount</th>
+          <th>Completed</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let care of filteredCares">
+          
+          <td>{{ care.date }}</td>
+          <td>{{ care.description }}</td>
+          <td>{{ care.beneficiary }}</td>
+          <td>{{ care.paidAmount | currency: "EUR" }}</td>
+          <td><cm-star [rating]="care.completed"></cm-star></td>
+          <td>
+              <button
+              class="btn btn-outline-primary btn-sm mr-1"
+              [routerLink]="['/cares', care.id]"
+            >
+              View
+            </button>
+            <button
+              class="btn btn-outline-primary btn-sm"
+              [routerLink]="['/cares', care.id, 'edit']"
+            >
+              Edit
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

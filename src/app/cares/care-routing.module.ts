@@ -1,3 +1,4 @@
+import { CareEditComponent } from './care-edit/care-edit.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CareListComponent } from './care-list.component';
@@ -20,6 +21,11 @@ import { AuthGuard } from '../core/auth.guard';
         path: 'cares/:id', 
         canActivate: [CareDetailGuard],
         component: CareDetailComponent 
+      },
+      { 
+        path: 'cares/:id/edit', 
+        canActivate: [CareDetailGuard],
+        component: CareEditComponent 
       }
     ])
   ],
