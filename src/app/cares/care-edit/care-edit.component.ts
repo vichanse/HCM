@@ -11,6 +11,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./care-edit.component.css']
 })
 export class CareEditComponent implements OnInit {
+  pageTitle: string = 'Edit care';
   careForm: FormGroup;
   care: Care = this.careQuery.getEntity(this.careId);
 
@@ -43,7 +44,7 @@ export class CareEditComponent implements OnInit {
   }
 
   deleteCare() {
-    
+
   }
 
   get careId() {
