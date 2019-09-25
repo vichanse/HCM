@@ -37,9 +37,13 @@ export class CareEditComponent implements OnInit {
     
   }
 
-  save() {
+  saveCare() {
     console.log(this.careForm);
     console.log('Saved: ' + JSON.stringify(this.careForm.value));
+  }
+
+  deleteCare() {
+    
   }
 
   get careId() {
