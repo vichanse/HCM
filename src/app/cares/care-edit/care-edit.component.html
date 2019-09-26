@@ -14,7 +14,7 @@
             type="text"
             placeholder="Description (required)"
             formControlName="description"
-            [ngClass]="{'is-invalid': displayMessage.description }"
+            [ngClass]="{ 'is-invalid': displayMessage.description }"
           />
           <span class="invalid-feedback">
             {{ displayMessage.description }}
@@ -31,7 +31,7 @@
             type="text"
             placeholder="Beneficiary (required)"
             formControlName="beneficiary"
-            [ngClass]="{'is-invalid': displayMessage.beneficiary }"
+            [ngClass]="{ 'is-invalid': displayMessage.beneficiary }"
           />
           <span class="invalid-feedback">
             {{ displayMessage.description }}
@@ -48,7 +48,7 @@
             type="text"
             placeholder="Professional (required)"
             formControlName="professional"
-            [ngClass]="{'is-invalid': displayMessage.professional }"
+            [ngClass]="{ 'is-invalid': displayMessage.professional }"
           />
           <span class="invalid-feedback">
             {{ displayMessage.professional }}
@@ -65,7 +65,7 @@
             type="text"
             placeholder="Payor (required)"
             formControlName="payor"
-            [ngClass]="{'is-invalid': displayMessage.payor }"
+            [ngClass]="{ 'is-invalid': displayMessage.payor }"
           />
           <span class="invalid-feedback">
             {{ displayMessage.payor }}
@@ -81,7 +81,7 @@
             type="text"
             placeholder="Paid Amount (required)"
             formControlName="paidAmount"
-            [ngClass]="{'is-invalid': displayMessage.paidAmount }"
+            [ngClass]="{ 'is-invalid': displayMessage.paidAmount }"
           />
           <span class="invalid-feedback">
             {{ displayMessage.paidAmount }}
@@ -97,7 +97,7 @@
             type="text"
             placeholder="Payment Method (required)"
             formControlName="paymentMethod"
-            [ngClass]="{'is-invalid': displayMessage.paymentMethod }"
+            [ngClass]="{ 'is-invalid': displayMessage.paymentMethod }"
           />
           <span class="invalid-feedback">
             {{ displayMessage.paymentMethod }}
@@ -113,11 +113,117 @@
             type="text"
             placeholder="Health Card (required)"
             formControlName="healthCard"
-            [ngClass]="{'is-invalid': displayMessage.healthCard }"
+            [ngClass]="{ 'is-invalid': displayMessage.healthCard }"
           />
           <span class="invalid-feedback">
             {{ displayMessage.healthCard }}
           </span>
+        </div>
+      </div>
+
+      <div *ngIf="refunds.length" class="card-header">Refunds</div>
+      <div class="form-group row mb-2">
+        <div class="col-md-4">
+          <button
+            class="btn btn-outline-primary"
+            type="button"
+            [disabled]="!refunds.valid"
+            (click)="addRefund()"
+          >
+            Add a refund
+          </button>
+        </div>
+      </div>
+      <div
+        class="card-body"
+        formArrayName="refunds"
+      >
+
+        <div class="row">
+          <div class="col-6" *ngFor="let refund of refunds.controls; let i = index">
+            <div class="card">
+              <div class="card-body">
+            <div [formGroupName]="i" class="row">
+              <div class="form-group col-6">
+              <label  attr.for="{{ 'transmission' + i }}"
+                >Transmission</label
+              >
+              <div>
+                <input
+                  class="form-control"
+                  id="{{ 'transmission' + i }}"
+                  type="text"
+                  placeholder="Transmission (required)"
+                  formControlName="transmission"
+                />
+                <span class="invalid-feedback"> </span>
+              </div>
+              </div>
+              <div class="form-group col-6">
+              <label attr.for="{{ 'sendDate' + i }}"
+                >Send date
+              </label>
+              <div >
+                <input
+                  class="form-control"
+                  id="{{ 'sendDate' + i }}"
+                  type="text"
+                  placeholder="Send date (Required)"
+                  formControlName="sendDate"
+                />
+                <span class="invalid-feedback"> </span>
+              </div>
+              </div>
+              <div class="form-group col-6">
+              <label  attr.for="{{ 'refundDate' + i }}"
+                >Refund date
+              </label>
+              <div >
+                <input
+                  class="form-control"
+                  id="{{ 'refundDate' + i }}"
+                  type="text"
+                  placeholder="HRefund date"
+                  formControlName="refundDate"
+                />
+                <span class="invalid-feedback"> </span>
+              </div>
+              </div>
+              <div class="form-group col-6">
+              <label  attr.for="{{ 'amount' + i }}">Amount</label>
+              <div >
+                <input
+                  class="form-control"
+                  id="{{ 'amount' + i }}"
+                  type="text"
+                  placeholder="Amount (required)"
+                  formControlName="amount"
+                />
+                <span class="invalid-feedback"> </span>
+              </div>
+              </div>
+              <div class="form-group col-6">
+              <label  attr.for="{{ 'onAccount' + i }}"
+                >On account
+              </label>
+              <div >
+                <input
+                  class="form-control"
+                  id="{{ 'onAccount' + i }}"
+                  type="text"
+                  placeholder="On account (required)"
+                  formControlName="onAccount"
+                />
+                <span class="invalid-feedback"> </span>
+              </div>
+              </div>
+            </div>
+            <div class="form-group row mb-2">
+              <button class="btn btn-danger" type="button" (click)="removeRefund(i)"> Remove </button>
+            </div>
+            </div>
+            </div>
+          </div>
         </div>
       </div>
 

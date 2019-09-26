@@ -2,7 +2,7 @@ import { CareService } from './../state/care.service';
 import { CareQuery } from './../state/care.query';
 import { Care } from './../state/care.model';
 import { Component, OnInit, ElementRef, ViewChildren } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControlName } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControlName, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { GenericValidator } from '../../shared/generic-validator';
 import { Observable, fromEvent, merge } from 'rxjs';
@@ -23,6 +23,10 @@ export class CareEditComponent implements OnInit {
   displayMessage: { [key: string]: string } = {};
   private validationMessages: { [key: string]: { [key: string]: string } };
   private genericValidator: GenericValidator;
+
+  get refunds(): FormArray {
+    return <FormArray>this.careForm.get('refunds');
+  }
 
   constructor(
     private route: ActivatedRoute,
@@ -70,7 +74,8 @@ export class CareEditComponent implements OnInit {
       payor: ['', Validators.required],
       paidAmount: ['', Validators.required],
       paymentMethod: ['', Validators.required],
-      healthCard: ['', Validators.required]
+      healthCard: ['', Validators.required],
+      refunds: this.fb.array([])
     });
 
     if (this.careQuery.hasEntity(this.careId) === false) {
@@ -109,6 +114,26 @@ export class CareEditComponent implements OnInit {
         healthCard: care.healthCard
       });
     }
+  }
+
+  buildRefund(): FormGroup {
+    return this.fb.group({
+      transmission: '',
+      sendDate: '',
+      refundDate: '',
+      amount: null,
+      onAccount: ''
+    });
+  }
+
+  addRefund(): void {
+    this.refunds.push(this.buildRefund());
+  }
+
+  // remove refund from group
+  removeRefund(index) {
+    // this.contactList = this.form.get('contacts') as FormArray;
+    this.refunds.removeAt(index);
   }
 
   ngAfterViewInit(): void {
