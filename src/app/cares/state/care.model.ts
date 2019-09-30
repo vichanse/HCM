@@ -2,7 +2,7 @@ import { ID } from '@datorama/akita';
 
 
 export interface CareRefund {
-  id: ID;
+  id: string;
   transmission: string;
   sendDate: Date;
   refundDate: Date;
@@ -10,7 +10,7 @@ export interface CareRefund {
   onAccount: Date;
 }
 export interface Care {
-  id: ID;
+  id: string;
   description: string;
   beneficiary: string;
   professional: string;
@@ -21,6 +21,7 @@ export interface Care {
   healthCard: string;
   completed: number;
   refunds: CareRefund[];
+  comment: string
 }
 
 /**

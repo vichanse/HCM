@@ -5,30 +5,29 @@ import { CareListComponent } from './care-list.component';
 import { CareDetailGuard } from './care-detail.guard';
 import { CareDetailComponent } from './care-detail.component';
 import { AuthGuard } from '../core/auth.guard';
-
-
+import { CareEditGuard } from './care-edit/care-edit.guard';
 
 @NgModule({
   declarations: [],
   imports: [
     RouterModule.forChild([
-      { 
-        path: 'cares', 
+      {
+        path: 'cares',
         canActivate: [AuthGuard],
-        component: CareListComponent 
+        component: CareListComponent
       },
-      { 
-        path: 'cares/:id', 
+      {
+        path: 'cares/:id',
         canActivate: [CareDetailGuard],
-        component: CareDetailComponent 
+        component: CareDetailComponent
       },
-      { 
-        path: 'cares/:id/edit', 
-        canActivate: [CareDetailGuard],
-        component: CareEditComponent 
+      {
+        path: 'cares/:id/edit',
+        canDeactivate: [CareEditGuard],
+        component: CareEditComponent
       }
     ])
   ],
-  exports: [ RouterModule ]
+  exports: [RouterModule]
 })
-export class CareRoutingModule { }
+export class CareRoutingModule {}

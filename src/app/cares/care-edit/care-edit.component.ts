@@ -17,7 +17,8 @@ export class CareEditComponent implements OnInit {
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
   pageTitle: string = 'Edit care';
   careForm: FormGroup;
-  care: Care = this.careQuery.getEntity(this.careId);
+  //care: Care = this.careQuery.getEntity(this.careId);
+  selectedCare$ = this.careQuery.selectedCare$;
 
   // Use with the generic validation message class
   displayMessage: { [key: string]: string } = {};
@@ -75,6 +76,7 @@ export class CareEditComponent implements OnInit {
       paidAmount: ['', Validators.required],
       paymentMethod: ['', Validators.required],
       healthCard: ['', Validators.required],
+      comment: [''],
       refunds: this.fb.array([])
     });
 
@@ -85,8 +87,7 @@ export class CareEditComponent implements OnInit {
         .subscribe();
     }
 
-    this.careQuery
-      .selectEntity(this.careId)
+    this.selectedCare$
       .pipe()
       .subscribe(care => this.displayCare(care));
   }
@@ -111,7 +112,8 @@ export class CareEditComponent implements OnInit {
         payor: care.payor,
         paidAmount: care.paidAmount,
         paymentMethod: care.paymentMethod,
-        healthCard: care.healthCard
+        healthCard: care.healthCard,
+        comment: care.comment
       });
     }
   }
