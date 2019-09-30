@@ -1,37 +1,30 @@
-import { CareService } from './care.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ICare } from './care';
+import { CareService } from './state/care.service';
+import { CareQuery } from './state/care.query';
 
 @Component({
   selector: 'cm-care-detail',
   templateUrl: './care-detail.component.html',
   styleUrls: ['./care-detail.component.css']
 })
-export class CareDetailComponent implements OnInit {
+export class CareDetailComponent implements OnInit, OnDestroy {
   pageTitle: string = 'Care view';
-  care: ICare;
+  selectedCare$ = this.careQuery.selectedCare$;
   errorMessage = '';
-  constructor(private route: ActivatedRoute, private router: Router, private careService: CareService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private careService: CareService,
+    private careQuery: CareQuery
+  ) {}
 
-  ngOnInit() {
-    const param = this.route.snapshot.paramMap.get('id');
-    if (param) {
-      const id = +param;
-      this.getCare(id);
-    }
-  }
-
-  getCare(id: number) {
-    this.careService.getCare(id).subscribe({
-      next: product => this.care = product,
-      error: err => this.errorMessage = err
-    });
-  }
+  ngOnInit() {}
 
   onBack(): void {
     this.router.navigate(['/cares']);
-    
   }
 
+  ngOnDestroy(): void {}
 }

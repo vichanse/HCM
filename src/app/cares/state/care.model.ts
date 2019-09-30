@@ -21,7 +21,7 @@ export interface Care {
   healthCard: string;
   completed: number;
   refunds: CareRefund[];
-  comment: string
+  comment?: string
 }
 
 /**

@@ -17,7 +17,7 @@ export class CareEditComponent implements OnInit {
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
   pageTitle: string = 'Edit care';
   careForm: FormGroup;
-  //care: Care = this.careQuery.getEntity(this.careId);
+  care: Care;
   selectedCare$ = this.careQuery.selectedCare$;
 
   // Use with the generic validation message class
@@ -33,7 +33,7 @@ export class CareEditComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private careQuery: CareQuery,
-    private careservice: CareService,
+    private careService: CareService,
     private fb: FormBuilder
   ) {
     // Defines all of the validation messages for the form.
@@ -81,7 +81,7 @@ export class CareEditComponent implements OnInit {
     });
 
     if (this.careQuery.hasEntity(this.careId) === false) {
-      this.careservice
+      this.careService
         .getCare(this.careId)
         .pipe()
         .subscribe();
@@ -89,12 +89,18 @@ export class CareEditComponent implements OnInit {
 
     this.selectedCare$
       .pipe()
-      .subscribe(care => this.displayCare(care));
+      .subscribe(care => {
+        this.care = care;
+        this.displayCare(care)}
+        );
   }
 
   saveCare() {
     console.log(this.careForm);
-    console.log('Saved: ' + JSON.stringify(this.careForm.value));
+
+    const care = { ...this.care, ...this.careForm.value };
+    console.log(care);
+    this.careService.addCare(care);
   }
 
   deleteCare() {}
@@ -113,7 +119,7 @@ export class CareEditComponent implements OnInit {
         paidAmount: care.paidAmount,
         paymentMethod: care.paymentMethod,
         healthCard: care.healthCard,
-        comment: care.comment
+        comment: care.comment ? care.comment :''
       });
     }
   }
