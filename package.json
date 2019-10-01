@@ -23,7 +23,6 @@
     "@angular/platform-browser-dynamic": "~8.1.2",
     "@angular/router": "~8.1.2",
     "@datorama/akita": "^4.10.4",
-    "@ngneat/until-destroy": "^6.0.0",
     "akita-ng-fire": "^1.0.0",
     "bootstrap": "^4.3.1",
     "firebase": ">= 5.5.7 <7",
