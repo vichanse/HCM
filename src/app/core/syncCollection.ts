@@ -28,5 +28,7 @@ export function syncCollection<T>(
     }
   }
 
-  return collection.stateChanges().pipe(withTransaction(updateStore));
+  return collection
+    .stateChanges(['added', 'modified', 'removed'])
+    .pipe(withTransaction(updateStore));
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ICare } from './care';
-import { CareService } from './state/care.service';
+import { Router } from '@angular/router';
+
 import { CareQuery } from './state/care.query';
 
 @Component({
@@ -14,9 +13,7 @@ export class CareDetailComponent implements OnInit, OnDestroy {
   selectedCare$ = this.careQuery.selectedCare$;
   errorMessage = '';
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
-    private careService: CareService,
     private careQuery: CareQuery
   ) {}
 

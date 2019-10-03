@@ -18,7 +18,6 @@ import { CareEditGuard } from './care-edit/care-edit.guard';
       },
       {
         path: 'cares/:id',
-        canActivate: [CareDetailGuard],
         component: CareDetailComponent
       },
       {

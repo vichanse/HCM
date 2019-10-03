@@ -1,19 +1,32 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<nav class='navbar navbar-expand-md navbar-light bg-light'>
-  <a class='navbar-brand'>{{pageTitle}}</a>
-  <button type="button" (click)="toggleNavbar()" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-      <span class="navbar-toggler-icon"></span>
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+  <a class="navbar-brand">{{ pageTitle }}</a>
+  <button
+    type="button"
+    (click)="toggleNavbar()"
+    class="navbar-toggler"
+    data-toggle="collapse"
+    data-target="#navbarCollapse"
+  >
+    <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }">
-      <ul class='nav nav-pills'>
-          <li><a class='nav-link' [routerLink]="['/welcome']">Home</a></li>
-          <li><a class='nav-link'[routerLink]="['/cares']">Care List</a></li>
-        </ul>
+  <div class="collapse navbar-collapse" [ngClass]="{ show: navbarOpen }">
+    <ul class="nav nav-pills">
+      <li class="nav-item"><a class="nav-link" [routerLink]="['/welcome']">Home</a></li>
+      <li class="nav-item"><a class="nav-link" [routerLink]="['/cares']">Care List</a></li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          [routerLink]="['/cares/0/edit']"
+          >Add Care</a
+        >
+      </li>
+    </ul>
   </div>
   <cm-signin></cm-signin>
-  
-  
 </nav>
-<div class='container'>
-    <router-outlet></router-outlet>
+<div class="container">
+  <router-outlet></router-outlet>
 </div>

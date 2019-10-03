@@ -1,8 +1,4 @@
-import { ID } from '@datorama/akita';
-
-
 export interface CareRefund {
-  id: string;
   transmission: string;
   sendDate: Date;
   refundDate: Date;
@@ -19,16 +15,14 @@ export interface Care {
   paidAmount: number;
   paymentMethod: string;
   healthCard: string;
-  completed: number;
+  completed?: number;
   refunds: CareRefund[];
-  comment?: string
+  comment?: string;
 }
 
 /**
  * A factory function that creates Care
  */
 export function createCare(params: Partial<Care>) {
-  return {
-
-  } as Care;
+  return {} as Care;
 }

@@ -1,19 +1,22 @@
+import { CareStore } from './../state/care.store';
 import { CareService } from './../state/care.service';
 import { CareQuery } from './../state/care.query';
 import { Care } from './../state/care.model';
-import { Component, OnInit, ElementRef, ViewChildren } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChildren, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControlName, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { GenericValidator } from '../../shared/generic-validator';
 import { Observable, fromEvent, merge } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { untilDestroyed } from 'ngx-take-until-destroy';
+import { RouterQuery } from '@datorama/akita-ng-router-store';
 
 @Component({
   selector: 'cm-care-edit',
   templateUrl: './care-edit.component.html',
   styleUrls: ['./care-edit.component.css']
 })
-export class CareEditComponent implements OnInit {
+export class CareEditComponent implements OnInit, OnDestroy {
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
   pageTitle: string = 'Edit care';
   careForm: FormGroup;
@@ -34,7 +37,8 @@ export class CareEditComponent implements OnInit {
     private router: Router,
     private careQuery: CareQuery,
     private careService: CareService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private routrerQuery: RouterQuery
   ) {
     // Defines all of the validation messages for the form.
     // These could instead be retrieved from a file or database.
@@ -81,46 +85,61 @@ export class CareEditComponent implements OnInit {
     });
 
     if (this.careQuery.hasEntity(this.careId) === false) {
-      this.careService
-        .getCare(this.careId)
-        .pipe()
-        .subscribe();
+      this.careService.syncDoc({ id: this.careId }).subscribe();
     }
+    this.selectedCare$.pipe().subscribe(care => {
+      console.log(care);
+      if (undefined == care) {
+        care = this.initializeCare();
+      }
+      this.care = care;
+      this.displayCare(care);
+    });
+  }
 
-    this.selectedCare$
-      .pipe()
-      .subscribe(care => {
-        this.care = care;
-        this.displayCare(care)}
-        );
+  get careId(): string {
+    return this.routrerQuery.getParams('id');
   }
 
   saveCare() {
-    console.log(this.careForm);
+    if (this.careForm.valid) {
+      if (this.careForm.dirty) {
+        if (this.care.id === undefined) {
+          this.careService.add(this.careForm.value);
+        } else {
+          const care = { ...this.care, ...this.careForm.value };
 
-    const care = { ...this.care, ...this.careForm.value };
-    console.log(care);
-    this.careService.addCare(care);
+          this.careService.update(care);
+        }
+      } else {
+        this.careForm.reset();
+      }
+      this.router.navigate(['/cares']);
+    } else {
+      alert('Errors!');
+    }
   }
 
-  deleteCare() {}
+  deleteCare() {
+    if (undefined !== this.care) {
+      if (confirm(`Really delete the care for: ${this.care.beneficiary}?`)) {
+        this.careService.remove(this.care.id);
+      }
+    }
+    this.router.navigate(['/cares']);
+  }
 
-  get careId() {
+  get careIdOld() {
     return this.route.snapshot.params.id;
   }
 
   displayCare(care: Care) {
-    if (undefined !== care) {
-      this.careForm.patchValue({
-        description: care.description,
-        beneficiary: care.beneficiary,
-        professional: care.professional,
-        payor: care.payor,
-        paidAmount: care.paidAmount,
-        paymentMethod: care.paymentMethod,
-        healthCard: care.healthCard,
-        comment: care.comment ? care.comment :''
-      });
+    if (this.careForm) {
+      this.careForm.reset();
+    }
+    if (undefined !== care.id && '0' !== care.id) {
+      this.care.refunds.forEach(refund => this.refunds.push(this.buildRefund()));
+      this.careForm.patchValue(care);
     }
   }
 
@@ -159,4 +178,23 @@ export class CareEditComponent implements OnInit {
         this.displayMessage = this.genericValidator.processMessages(this.careForm);
       });
   }
+
+  private initializeCare(): Care {
+    // Return an initialized object
+    return {
+      id: undefined,
+      description: null,
+      beneficiary: null,
+      professional: null,
+      payor: null,
+      paidAmount: null,
+      paymentMethod: null,
+      healthCard: null,
+      comment: null,
+      date: null,
+      refunds: []
+    };
+  }
+
+  ngOnDestroy() {}
 }

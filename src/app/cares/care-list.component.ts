@@ -1,49 +1,42 @@
-import { Component, OnInit } from '@angular/core';
-import { ICare } from './care';
+import { CareQuery } from './state/care.query';
+import { Observable, combineLatest } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CareService } from './state/care.service';
 import { Care } from './state/care.model';
-import { untilDestroyed } from '@ngneat/until-destroy';
+import { untilDestroyed } from 'ngx-take-until-destroy';
+import { FormControl } from '@angular/forms';
+import { startWith, map } from 'rxjs/operators';
+
 @Component({
   selector: 'cm-cares',
   templateUrl: './care-list.component.html',
   styleUrls: ['./care-list.component.css']
 })
-export class CareListComponent implements OnInit {
+export class CareListComponent implements OnInit, OnDestroy {
   pageTitle: string = 'Care List';
-  _listFilter: string;
-  filteredCares: Care[];
-  cares: Care[] = [];
+  cares$: Observable<Care[]>;
+  filteredCare$: Observable<Care[]>;
+  loading$: Observable<boolean>;
   errorMessage: string;
+  filter: FormControl = new FormControl('');
+  filter$: Observable<string> = this.filter.valueChanges.pipe(startWith(''));
 
-  constructor(private careService: CareService) {}
+  constructor(private careService: CareService, private careQuery: CareQuery) {}
 
   ngOnInit(): void {
-    this.careService.getCares().subscribe({
-      next: cares => {
-        (this.cares = cares), (this.filteredCares = this.cares);
-      },
-      error: err => (this.errorMessage = err)
-    });
-
     this.careService
-      .connect()
-      .pipe(untilDestroyed(this))
+      .syncCollection()
       .subscribe();
+
+    this.loading$ = this.careQuery.selectLoading();
+    this.cares$ = this.careQuery.selectAll();
+    // this.filteredCare$ = combineLatest(this.cares$, this.filter$).pipe(
+    //   map(([cares, filterString]) => cares.filter(care => care.beneficiary.toLowerCase().includes(filterString)))
+    // );
   }
 
-  get listFilter(): string {
-    return this._listFilter;
+  trackByFn(i, care) {
+    return care.id;
   }
-
-  set listFilter(value: string) {
-    this._listFilter = value;
-    this.filteredCares = this.listFilter ? this.performFilter(this.listFilter) : this.cares;
-  }
-
-  performFilter(filterBy: string): Care[] {
-    filterBy = filterBy.toLocaleLowerCase();
-    return this.cares.filter(
-      (care: Care) => care.beneficiary.toLocaleLowerCase().indexOf(filterBy) !== -1
-    );
-  }
+  ngOnDestroy(): void {}
 }

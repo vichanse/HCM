@@ -10,6 +10,7 @@ export class CareQuery extends QueryEntity<CareState, Care> {
   selectedCare$ = this.routerQuery
     .selectParams('id')
     .pipe(switchMap((id: string) => this.selectEntity(id)));
+
   constructor(protected store: CareStore, private routerQuery: RouterQuery) {
     super(store);
   }
