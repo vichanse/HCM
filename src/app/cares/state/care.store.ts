@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Care } from './care.model';
-import { EntityState,  EntityStore, StoreConfig } from '@datorama/akita';
+import { EntityStore, StoreConfig } from '@datorama/akita';
 import { CollectionState } from 'akita-ng-fire';
 
 export interface CareState extends CollectionState<Care> {}

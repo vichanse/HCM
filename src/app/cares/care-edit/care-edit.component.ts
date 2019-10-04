@@ -84,11 +84,10 @@ export class CareEditComponent implements OnInit, OnDestroy {
       refunds: this.fb.array([])
     });
 
-    if (this.careQuery.hasEntity(this.careId) === false) {
+    if ('0' !== this.careId && this.careQuery.hasEntity(this.careId) === false) {
       this.careService.syncDoc({ id: this.careId }).subscribe();
     }
     this.selectedCare$.pipe().subscribe(care => {
-      console.log(care);
       if (undefined == care) {
         care = this.initializeCare();
       }
@@ -102,6 +101,7 @@ export class CareEditComponent implements OnInit, OnDestroy {
   }
 
   saveCare() {
+
     if (this.careForm.valid) {
       if (this.careForm.dirty) {
         if (this.care.id === undefined) {
@@ -111,6 +111,7 @@ export class CareEditComponent implements OnInit, OnDestroy {
 
           this.careService.update(care);
         }
+        this.careForm.reset();
       } else {
         this.careForm.reset();
       }
